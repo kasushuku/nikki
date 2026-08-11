@@ -1,0 +1,286 @@
+<!-- render () -->
+<!DOCTYPE html>
+<body>
+    <div class="blog-layout" id="home">
+      <!-- 左側：検索・フィルター -->
+      <aside class="sidebar window" aria-label="記事の検索と絞り込み">
+        <div class="title-bar active">
+          <div class="title-bar-text">Blog Navigator（動作しません）</div>
+        </div>
+
+        <div class="window-body">
+          <!-- キーワード検索 -->
+          <section class="sidebar-section">
+            <h2>記事を検索</h2>
+
+            <label for="search-input">キーワード:</label>
+            <input
+              id="search-input"
+              type="search"
+              placeholder="タイトル・本文を検索"
+              autocomplete="off"
+            >
+
+            <div class="search-buttons">
+              <button type="button" id="search-button">
+                🔍 検索
+              </button>
+
+              <button type="button" id="reset-button">
+                クリア
+              </button>
+            </div>
+          </section>
+
+          <!-- 並べ替え -->
+          <section class="sidebar-section">
+            <label for="sort-select">
+              <strong>並べ替え:</strong>
+            </label>
+
+            <select id="sort-select">
+              <option value="newest">新しい記事順</option>
+              <option value="oldest">古い記事順</option>
+              <option value="title">タイトル順</option>
+            </select>
+          </section>
+
+          <!-- カテゴリー -->
+          <section class="sidebar-section" id="categories">
+            <h2>カテゴリー</h2>
+
+            <div class="category-list">
+              <button
+                type="button"
+                class="category-button active"
+                data-category="all"
+              >
+                📁 すべての記事
+              </button>
+
+              <button
+                type="button"
+                class="category-button"
+                data-category="日記"
+              >
+                📄 日記
+              </button>
+
+              <button
+                type="button"
+                class="category-button"
+                data-category="技術"
+              >
+                💻 技術
+              </button>
+
+              <button
+                type="button"
+                class="category-button"
+                data-category="お知らせ"
+              >
+                📢 お知らせ
+              </button>
+            </div>
+          </section>
+        </div>
+      </aside>
+
+      <!-- 右側：ブログ記事 -->
+      <section class="content-area" id="articles">
+        <section class="window content-header">
+          <div class="title-bar inactive">
+            <div class="title-bar-text">Welcome to Kasushuku</div>
+          </div>
+
+          <div class="window-body">
+            <h1>かすしゅくみんなブログへようこそ</h1>
+            <p>
+              筑波大学 情報学群 知識情報・図書館学類だったり、筑波大学 人間総合なんとかにいる人が書いている日記。
+            </p>
+          </div>
+        </section>
+
+        <div class="article-list" id="article-list">
+          <!-- 記事1 -->
+          <article
+            class="window article-window"
+            data-category="お知らせ"
+            data-date="2026-08-12"
+            data-title="みんなブログを公開しました"
+          >
+            <div class="title-bar">
+              <div class="title-bar-text">
+                みんなブログを公開しました
+              </div>
+
+              <div class="title-bar-controls">
+                <button
+                  type="button"
+                  aria-label="Minimize"
+                  class="collapse-button"
+                ></button>
+                <button type="button" aria-label="Maximize"></button>
+                <button type="button" aria-label="Close"></button>
+              </div>
+            </div>
+
+            <div class="window-body article-content">
+              <div class="article-meta">
+                <span>📅 2026年8月12日</span>
+                <span>📁 お知らせ</span>
+                <span>✍️ かすしゅく編集部</span>
+              </div>
+
+              <div class="article-body">
+                <p>
+                  ここに載ってる記事は全部モックアップです。自動で取得とかはしてません。
+                </p>
+              </div>
+
+              <div class="article-actions">
+                <button type="button">💬 コメント</button>
+                <button type="button" class="copy-link-button">
+                  🔗 URLをコピー
+                </button>
+                <button type="button" class="read-button">
+                  続きを読む &gt;
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 記事2 -->
+          <article
+            class="window article-window"
+            data-category="技術"
+            data-date="2026-08-08"
+            data-title="98.cssでWindows 98風のブログを作る"
+          >
+            <div class="title-bar">
+              <div class="title-bar-text">
+                98.cssでWindows 98風のブログを作る
+              </div>
+
+              <div class="title-bar-controls">
+                <button
+                  type="button"
+                  aria-label="Minimize"
+                  class="collapse-button"
+                ></button>
+                <button type="button" aria-label="Maximize"></button>
+                <button type="button" aria-label="Close"></button>
+              </div>
+            </div>
+
+            <div class="window-body article-content">
+              <div class="article-meta">
+                <span>📅 2026年8月8日</span>
+                <span>📁 技術</span>
+                <span>✍️ Webチーム</span>
+              </div>
+
+              <div class="article-body">
+                <p>
+                  98.cssを使うと、HTMLの基本的な構造を保ちながら
+                  Windows 98風の画面を作成できます。
+                </p>
+
+                <h2>今回使用した主なクラス</h2>
+
+                <p>
+                  <code>window</code>、<code>title-bar</code>、
+                  <code>window-body</code>などを組み合わせて、
+                  ブログの記事をひとつのウィンドウとして表示しています。
+                </p>
+              </div>
+
+              <div class="article-actions">
+                <button type="button">💬 コメント</button>
+                <button type="button" class="copy-link-button">
+                  🔗 URLをコピー
+                </button>
+                <button type="button" class="read-button">
+                  続きを読む &gt;
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 記事3 -->
+          <article
+            class="window article-window"
+            data-category="日記"
+            data-date="2026-08-01"
+            data-title="夏の活動記録"
+          >
+            <div class="title-bar">
+              <div class="title-bar-text">
+                夏の活動記録
+              </div>
+
+              <div class="title-bar-controls">
+                <button
+                  type="button"
+                  aria-label="Minimize"
+                  class="collapse-button"
+                ></button>
+                <button type="button" aria-label="Maximize"></button>
+                <button type="button" aria-label="Close"></button>
+              </div>
+            </div>
+
+            <div class="window-body article-content">
+              <div class="article-meta">
+                <span>📅 2026年8月1日</span>
+                <span>📁 日記</span>
+                <span>✍️ 参加メンバー</span>
+              </div>
+
+              <div class="article-body">
+                <p>
+                  今月の活動内容をまとめました。
+                  サイトのデザイン案を出し合い、
+                  Windows 98をイメージした構成に決定しました。
+                </p>
+
+                <p>
+                  まずは記事一覧と検索機能を作り、
+                  今後は個別記事ページや投稿画面も追加する予定です。
+                </p>
+              </div>
+
+              <div class="article-actions">
+                <button type="button">💬 コメント</button>
+                <button type="button" class="copy-link-button">
+                  🔗 URLをコピー
+                </button>
+                <button type="button" class="read-button">
+                  続きを読む &gt;
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="window empty-message" id="empty-message">
+          <div class="window-body">
+            <p>条件に一致する記事は見つかりませんでした。</p>
+            <button type="button" id="empty-reset-button">
+              検索条件をクリア
+            </button>
+          </div>
+        </div>
+
+        <nav class="pagination" aria-label="ページ送り">
+          <button type="button" disabled>&lt; 前へ</button>
+          <button type="button" aria-current="page">1</button>
+          <button type="button">2</button>
+          <button type="button">3</button>
+          <button type="button">次へ &gt;</button>
+        </nav>
+      </section>
+    </div>
+    </dev>
+</body>
+</html>
