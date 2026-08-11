@@ -1,0 +1,9 @@
+; dune projectのrootがrepo rootになったため、走査範囲を明示する。
+
+; content/ は nikki-content のsubmodule。中にdune fileは無く、
+; 将来の検索index生成でデータとしてだけ参照する。
+; data_only_dirsにしないと写真まで _build へコピーされる。
+(data_only_dirs content)
+
+; docs/ はビルドに関与しない
+(dirs :standard \ docs)

@@ -1,1 +1,7 @@
 devbox.lock
+
+# dune
+_build/
+
+# Melange出力
+web/assets/generated/

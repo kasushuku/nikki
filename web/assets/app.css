@@ -1,0 +1,17 @@
+:root {
+  color-scheme: light dark;
+  --measure: 42rem;
+}
+
+body {
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  max-width: var(--measure);
+  font-family: system-ui, sans-serif;
+  line-height: 1.7;
+}
+
+header a {
+  font-weight: 700;
+  text-decoration: none;
+}

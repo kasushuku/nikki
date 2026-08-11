@@ -1,0 +1,19 @@
+.git
+.gitignore
+.gitmodules
+.devbox
+devbox.json
+devbox.lock
+docs
+README.md
+Dockerfile
+.dockerignore
+vercel.json
+
+# dune / melange のビルド成果物
+_build
+web/assets/generated
+
+# content/ 側に紛れ込みがちなもの
+**/.DS_Store
+**/node_modules
