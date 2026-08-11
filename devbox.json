@@ -10,8 +10,10 @@
     "github:nixos/nixpkgs/nixpkgs-unstable#openssl.dev",
     "github:nixos/nixpkgs/nixpkgs-unstable#libev",
   ],
-  "env": {
-    "PKG_CONFIG_PATH": "$PWD/.devbox/nix/profile/default/share/pkgconfig:$PWD/.devbox/nix/profile/default/lib/pkgconfig",
+ "env": {
+  "PKG_CONFIG_PATH": "$PWD/.devbox/nix/profile/default/share/pkgconfig:$PWD/.devbox/nix/profile/default/lib/pkgconfig",
+  "LIBRARY_PATH": "$PWD/.devbox/nix/profile/default/lib",
+  "LD_LIBRARY_PATH": "$PWD/.devbox/nix/profile/default/lib"
   },
   "shell": {
     "init_hook": [
