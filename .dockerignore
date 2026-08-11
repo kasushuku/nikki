@@ -21,5 +21,10 @@ pnpm-workspace.yaml
 _build
 web/assets/generated
 
+# ローカルは dune package management、コンテナは opam switch でビルドする。
+# dune-workspace が入ると (pkg enabled) が効いて、コンテナ側も依存を
+# 取り直そうとするため除外する。
+dune-workspace
+
 # content/ 側に紛れ込みがちなもの
 **/.DS_Store

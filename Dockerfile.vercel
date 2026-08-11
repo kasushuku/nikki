@@ -34,9 +34,11 @@ RUN opam update \
  && opam install --deps-only --yes . \
  && opam clean --all --yes
 
-# Melangeを入れたら web/ もbuild stageへcopyし、静的アセットは
-# _build/default/web/assets からruntimeへ渡すこと
+# web/views/*.html から views.ml を生成するため、web/ はビルドにも要る。
+# Melangeを入れたら、静的アセットは web/ ではなく
+# _build/default/web/assets からruntimeへ渡すこと。
 COPY --chown=opam:opam dune ./
+COPY --chown=opam:opam web ./web
 COPY --chown=opam:opam app ./app
 RUN opam exec -- dune build --profile release app/bin/main.exe
 

@@ -1,0 +1,15 @@
+# Vercelへアップロードしないもの。
+# ここに書いても、コンテナのビルド文脈は .dockerignore が別に制御する。
+
+# duneのビルド成果物。dune package managementが _private と _fetch に
+# 依存パッケージ一式を展開するため 600MB を超える。
+# これを入れるとアップロードが 10MB 制限に当たる。
+_build
+
+# ローカル開発の環境
+.devbox
+node_modules
+.vercel
+
+# 設計ドキュメント。コンテナのビルドには要らない
+docs
