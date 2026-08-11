@@ -1,6 +1,6 @@
 (library
  (name app)
- (libraries dream))
+ (libraries dream yojson))
 
 ; (rule
 ;  (targets layout.ml)
@@ -14,7 +14,6 @@
  (targets views.ml)
  (deps 
   (glob_files %{workspace_root}/web/views/*.html)
-   %{workspace_root}/web/views/index.html
   %{workspace_root}/app/lib/gen_views.sh
   %{bin:dream_eml})
  (action

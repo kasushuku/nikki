@@ -6,47 +6,30 @@ let port =
   | Some p -> p
   | None -> 8080
 
-(* let layout ~title body = *)
-(*   Printf.sprintf *)
-(*     {|<!doctype html> *)
-(* <html lang="ja"> *)
-(* <head> *)
-(* <meta charset="utf-8"> *)
-(* <meta name="viewport" content="width=device-width, initial-scale=1"> *)
-(* <title>%s</title> *)
-(* <link rel="stylesheet" href="/assets/app.css"> *)
-(* </head> *)
-(* <body> *)
-(* <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script> *)
-(* <header><a href="/">にっき.かすしゅく.みんな</a></header> *)
-(* <main id="main">%s</main> *)
-(* </body> *)
-(* </html>|} *)
-(*     title body *)
-
-(* 同一canonical URLから完全ページとfragmentを返す。
-   キャッシュが両者を混同しないよう Vary を必ず付ける。 *)
-(* let page request ~title body = *)
-(*   let headers = [ ("Vary", "HX-Request") ] in *)
-(*   match Dream.header request "HX-Request" with *)
-(*   | Some "true" -> Dream.html ~headers body *)
-(*   | _ -> Dream.html ~headers (layout ~title body) *)
-
-
 (* Dreamが処理するのはSIGINTのみ。Vercelはscale-in時にSIGTERM+30秒の猶予を
    送るため、明示的に終了させないと毎回SIGKILLまで待たされる。 *)
 let () = Sys.set_signal Sys.sigterm (Sys.Signal_handle (fun _ -> exit 0))
+let articles = App.Entry.load_dir "content/articles"
 
 let () =
   Dream.run ~interface:"0.0.0.0" ~port
   @@ Dream.logger
   @@ Dream.router
        [
-      Dream.get "/" (fun _ -> Dream.html (App.Views.Index.render ~author:"zkm" ~article_count:"999"));
-      Dream.get "/index.html" (fun _ -> Dream.html (App.Views.Index.render ~author:"zkm" ~article_count:"999"));
-      Dream.get "/home_window.html" (fun _ -> Dream.html (App.Views.Home_window.render ()));
-      Dream.get "/all_posts.html" (fun _ -> Dream.html (App.Views.All_posts.render ()));
-      Dream.get "/about.html" (fun _ -> Dream.html (App.Views.About.render () ));
+         Dream.get "/" (fun _ ->
+             Dream.html
+               (App.Views.Index.render ~author:"zkm" ~article_count:"999"));
+         Dream.get "/all_posts.html" (fun _ ->
+             Dream.html (App.Views.All_posts.render articles));
+         Dream.get "/home_window.html" (fun _ ->
+             Dream.html (App.Views.Home_window.render ()));
+         Dream.get "/about.html" (fun _ ->
+             Dream.html (App.Views.About.render ()));
+         Dream.get "/articles/:id" (fun request ->
+            let id = Filename.remove_extension (Dream.param request "id") in
+             match App.Entry.find articles id with
+             | Some a -> Dream.html (App.Views.Article.render a)
+             | None -> Dream.empty `Not_Found);
          Dream.get "/healthz" (fun _ -> Dream.respond "ok");
          Dream.get "/assets/**" (Dream.static "web/assets");
        ]

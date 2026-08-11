@@ -1,0 +1,50 @@
+<!-- render (a: Entry.t)-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title><%s a.Entry.title %></title>
+
+  <link rel="stylesheet" href="https://unpkg.com/98.css">
+  <!-- <link rel="stylesheet" href="/assets/container.css"> -->
+</head>
+
+<body>
+  <main class="standalone-article">
+    <!--
+      index.htmlから読み込むときは、
+      hx-select="#article-content"によって
+      この要素だけが取り出される。
+    -->
+    <article id="article-content" class="window article-detail">
+      <div class="title-bar">
+        <div class="title-bar-text">
+          <%s a.Entry.title%>
+        </div>
+        <div class="title-bar-controls">
+          <button type="button" aria-label="Minimize"></button>
+          <button type="button" aria-label="Maximize"></button>
+          <button type="button" aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="article-meta">
+          <span>公開日: <%s a.Entry.date%></span>
+          <span>カテゴリー: <%s a.Entry.category%></span>
+          <span>投稿者: <%s a.Entry.author%></span>
+        </div>
+
+        <div class="article-body">
+          <h1><%s a.Entry.title%></h1>
+<%s! a.Entry.body%>
+        </div>
+        <div class="article-actions">
+          <a href="/" hx-get="/all_posts.html" hx-target="#main-window" hx-push-url="/">&lt; 記事一覧に戻る</a>
+            <button class="default" hx-get="/articles/<%s a.title %>" hx-target="#main-window"></button>
+        </div>
+    </article>
+  </main>
+</body>
+</html>
