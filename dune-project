@@ -21,7 +21,8 @@
    (>= 5.1))
   (dune
    (>= 3.23))
-  dream)
+  dream
+  yojson)
  (tags
   (diary dream htmx)))
 

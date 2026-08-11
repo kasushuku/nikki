@@ -1,0 +1,38 @@
+<!-- render (a: Entry.t) -->
+<!DOCTYPE html>
+<html lang="ja">
+<body>
+<article class="window article-window"
+  data-category="<%s a.Entry.category %>"
+  data-date="<%s a.Entry.date%>"
+  data-title="<%s a.Entry.title%>">
+  <div class="title-bar">
+    <div class="title-bar-text">
+      <%s a.Entry.title %>
+    </div>
+  </div>
+  <div class="window-body article-content">
+    <div class="article-meta">
+      <span>📅 <%s a.Entry.date %></span>
+      <span>📁 <%s a.Entry.category%></span>
+      <span>✍️ <%s a.Entry.author%></span>
+    </div>
+    <div class="article-body">
+      <p><%s a.Entry.abst %></p>
+    </div>
+    <div class="article-actions">
+      <button type="button">💬 コメント</button>
+      <button type="button" class="copy-link-button">
+        🔗 URLをコピー
+      </button>
+      <!-- <button type="button" class="read-button"> -->
+      <!--   続きを読む &gt; -->
+      <!-- </button> -->
+      <button type="button" class="read-button" hx-get="/articles/<%s a.id %>" hx-target="#main-window">
+            続きを読む %gt;
+          </button>
+    </div>
+  </div>
+</article>
+</body>
+</html>
