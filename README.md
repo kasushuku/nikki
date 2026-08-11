@@ -20,6 +20,7 @@
 ## 開発
 
 ```sh
+# devbox shell (for install dune and some build requirement package)
 dune build
 PORT=8080 dune exec app/bin/main.exe
 ```
