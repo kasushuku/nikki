@@ -5,3 +5,8 @@ _build/
 
 # Melange出力
 web/assets/generated/
+
+# node / vercel CLI
+node_modules/
+.vercel/
+.vercel

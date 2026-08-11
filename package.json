@@ -1,0 +1,11 @@
+{
+	"private": true,
+	"devDependencies": {
+		"vercel": "^58.9.0"
+	},
+	"scripts": {
+		"deploy": "vercel deploy",
+		"deploy:prod": "vercel deploy --prod",
+		"dev": "vercel dev"
+	}
+}
