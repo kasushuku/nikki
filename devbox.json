@@ -1,6 +1,9 @@
 {
-  "$schema":  "https://raw.githubusercontent.com/jetify-com/devbox/0.17.5/.schema/devbox.schema.json",
-  "packages": ["github:nixos/nixpkgs/nixpkgs-unstable#dune"],
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.5/.schema/devbox.schema.json",
+  "packages": [
+    "github:nixos/nixpkgs/nixpkgs-unstable#dune",
+    "pnpm@latest"
+  ],
   "shell": {
     "init_hook": [
       "export DEVBOX_PROMPT_NAME='kasushuku_nikki'"

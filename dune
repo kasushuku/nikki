@@ -5,5 +5,7 @@
 ; data_only_dirsにしないと写真まで _build へコピーされる。
 (data_only_dirs content)
 
-; docs/ はビルドに関与しない
-(dirs :standard \ docs)
+; docs/ はビルドに関与しない。
+; node_modules/ はvercel CLI用。:standard はdot/underscore始まり以外を
+; すべて拾うので、除外しないとduneが252MBを走査して _build へコピーする。
+(dirs :standard \ docs node_modules)
