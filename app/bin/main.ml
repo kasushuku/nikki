@@ -45,7 +45,8 @@ let () =
   @@ Dream.logger
   @@ Dream.router
        [
-        Dream.get "/" (fun request -> page request ~title:"にっき" (App.Views.Index.render ~author:"kasushuku"));
+        Dream.get "/" (fun request -> page request ~title:"にっき" (App.Views.Index.render ~author:"zkm" ~article_count:"999" ));
+        Dream.get "/about" (fun request -> page request ~title:"にっき" (App.Views.About.render () ));
          Dream.get "/healthz" (fun _ -> Dream.respond "ok");
          Dream.get "/assets/**" (Dream.static "web/assets");
        ]
