@@ -6,9 +6,16 @@ devbox.json
 devbox.lock
 docs
 README.md
-Dockerfile
+Dockerfile.vercel
 .dockerignore
+
+# vercel CLI (globalには入れずlocalに置いている)
 vercel.json
+.vercel
+package.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+**/node_modules
 
 # dune / melange のビルド成果物
 _build
@@ -16,4 +23,3 @@ web/assets/generated
 
 # content/ 側に紛れ込みがちなもの
 **/.DS_Store
-**/node_modules
