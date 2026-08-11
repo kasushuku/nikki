@@ -3,7 +3,7 @@
   "packages": ["github:nixos/nixpkgs/nixpkgs-unstable#dune"],
   "shell": {
     "init_hook": [
-      "export DEVBOX_PRMOPT_NAME='kasushuku_nikki'"
+      "export DEVBOX_PROMPT_NAME='kasushuku_nikki'"
     ],
     "scripts": {
       "test": [
