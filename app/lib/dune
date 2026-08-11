@@ -1,2 +1,24 @@
 (library
- (name app))
+ (name app)
+ (libraries dream))
+
+; (rule
+;  (targets layout.ml)
+;  (deps %{workspace_root}/web/views/layout.eml.html)
+;  (action
+;   (with-stdout-to
+;     layout.ml
+;     (run dream_eml %{deps} --stdout --workspace %{workspace_root}))))
+
+(rule
+ (targets views.ml)
+ (deps 
+  (glob_files %{workspace_root}/web/views/*.html)
+   %{workspace_root}/web/views/index.html
+  %{workspace_root}/app/lib/gen_views.sh
+  %{bin:dream_eml})
+ (action
+  (progn
+   (with-stdout-to
+    views.ml
+    (bash "bash %{workspace_root}/app/lib/gen_views.sh %{workspace_root}/web/views/*.html" )))))

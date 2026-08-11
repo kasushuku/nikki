@@ -17,6 +17,7 @@ let layout ~title body =
 <link rel="stylesheet" href="/assets/app.css">
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
 <header><a href="/">にっき.かすしゅく.みんな</a></header>
 <main id="main">%s</main>
 </body>
@@ -44,7 +45,7 @@ let () =
   @@ Dream.logger
   @@ Dream.router
        [
-         Dream.get "/" (fun request -> page request ~title:"にっき" index);
+        Dream.get "/" (fun request -> page request ~title:"にっき" (App.Views.Index.render ~author:"kasushuku"));
          Dream.get "/healthz" (fun _ -> Dream.respond "ok");
          Dream.get "/assets/**" (Dream.static "web/assets");
        ]
