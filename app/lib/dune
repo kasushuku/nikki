@@ -1,6 +1,7 @@
 (library
  (name app)
- (libraries dream yojson))
+ ; tfidf_search は vendor/search（vendor/README.md）。opamでは解決しない。
+ (libraries dream yojson tfidf_search))
 
 ; (rule
 ;  (targets layout.ml)
