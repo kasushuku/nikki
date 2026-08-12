@@ -5,6 +5,11 @@
 ; data_only_dirsにしないと写真まで _build へコピーされる。
 (data_only_dirs content)
 
+; vendor/ はopamで解決せずソースを取り込んだ第三者ライブラリ（vendor/README.md）。
+; vendored指定にすると、duneはこのプロジェクトのflagsやwarnings-as-errorを
+; 適用せず、上流のコードをそのままビルドする。
+(vendored_dirs vendor)
+
 ; docs/ はビルドに関与しない。
 ; node_modules/ はvercel CLI用。:standard はdot/underscore始まり以外を
 ; すべて拾うので、除外しないとduneが252MBを走査して _build へコピーする。

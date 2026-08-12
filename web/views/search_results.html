@@ -1,0 +1,17 @@
+<!-- render ~(q: string) (articles: Entry.t list) -->
+<div class="search-summary">
+% if String.trim q = "" then (
+  <p>全 <%s string_of_int (List.length articles) %> 件</p>
+% ) else (
+  <p>「<%s q %>」の検索結果: <%s string_of_int (List.length articles) %> 件</p>
+% );
+</div>
+% if articles = [] then (
+<div class="window empty-message">
+  <div class="window-body">
+    <p>条件に一致する記事は見つかりませんでした。</p>
+  </div>
+</div>
+% ) else List.iter (fun (a: Entry.t) ->
+<%s! Card.render a %>
+% ) articles;

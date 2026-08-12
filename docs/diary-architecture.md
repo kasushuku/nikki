@@ -123,6 +123,8 @@ nikki/
 │       ├── app.css
 │       ├── vendor/htmx.min.js
 │       └── generated/         # Melange出力。Git管理外
+├── vendor/                    # opamで解決せず取り込んだ第三者ライブラリ
+│   └── search/                # ocaml-search（§9）
 ├── content/                   # nikki-contentへのGit submodule
 ├── Dockerfile.vercel          # この名前でVercelが自動検出する（§11.1）
 ├── vercel.json
@@ -312,7 +314,26 @@ htmxとMelangeを直接依存させず、接続面を次に限定する。
 
 `GET /search?q=...` はサーバー検索結果をSSRする。Melangeが利用できる場合は、画面遷移なしのインクリメンタル検索へ切り替える。
 
-index形式と検索アルゴリズムは未決定。
+### サーバー側の実装（決定済み）
+
+インメモリの転置index + TF-IDF。ライブラリは [ocaml-search](https://github.com/patricoferris/ocaml-search) を `vendor/search/` へ取り込んで使う（`vendor/README.md`）。opamで解決せずvendorしたのは、依存がduneだけでCライブラリを引かず、イメージサイズに響かないため。SQLite FTS5も候補だったが、libsqlite3を足すコストに見合わないと判断した。
+
+- indexは `app/bin/main.ml` の起動時に一度だけ組む。§11.3の通りcontentはビルド時にイメージへ焼き込まれ、プロセスの生存中に変化しないため、再構築の仕組みは要らない。
+- tokenは**文字unigram + bigram**（`app/lib/search.ml`）。日本語は空白で語に切れないので、ライブラリ既定の空白splitでは本文が丸ごと1 tokenになる。形態素解析は入れていない。
+- 絞り込みは全token一致（AND）、並び順はライブラリのTF-IDF。
+- `abst` / `body` はHTMLを含むので、indexに入れる前にタグを落とす。
+
+実測（合成コーパス、1記事あたり本文1550字）。
+
+| 記事数 | index構築 | 1 query |
+| --- | --- | --- |
+| 50 | 0.06s | 1.2ms |
+| 200 | 0.31s | 7.8ms |
+| 500 | 0.76s | 25.3ms |
+
+index構築時間はcold startにそのまま乗る。§11.1の通りほぼ全アクセスがcold startになるので、記事数が数百を超えたらビルド時にindexを作って焼き込む方式へ移す判断が要る。
+
+ブラウザ側（Melange）のindex形式は未決定。`vendor/search` はdune以外に依存しないが `(modes melange)` 付きでは公開されていないため、そのままではMelangeから使えない。
 
 ## 10. 認証と可視性
 
@@ -417,13 +438,16 @@ scale to zeroするFunctionの中でagentを実行するのは向かない。§1
 - Vercel本番で稼働中（`https://nikki-jade.vercel.app`）。`/`・`/healthz`・`/assets/app.css`・`HX-Request` fragment・404のすべてが期待通り。`Vary: HX-Request` もedgeを通過して保持される。
 - vercel CLIはglobalに入れず、`package.json` のdevDependencyとして持つ。
 
+- サーバー側の全文検索。`vendor/search` + `app/lib/search.ml` + `GET /search`。htmxで `#article-list` を差し替える。Dockerイメージ上で疎通確認済み。
+
 未着手。
 
 - `app/server/`、`app/shared/`、`app/ui/` への分割
 - Markdownのパースとcontentの読み込み
 - Melangeの導入
 - 認証
-- 検索
+- ブラウザ側（Melange）の検索
+- 非公開記事を除外する検索（§9・認証に依存）
 
 ## 14. 未決定事項
 
@@ -432,7 +456,7 @@ scale to zeroするFunctionの中でagentを実行するのは向かない。§1
 1. 認証方式（§10.1）。§8のキャッシュ、§9の検索、§10.2の画像配信がこれに依存する。
 2. shared schemaのJSON codec方針（§5.3）。
 3. `nikki-content` をprivateにした場合のsubmodule解決方法（§11.3）。
-4. 公開検索indexの形式と検索アルゴリズム（§9）。
+4. ブラウザ側（Melange）の検索index形式（§9）。サーバー側は決定済み。
 5. URL設計の確定とページネーション方式（§7）。
 6. ビルド成果物をpromoteするかどうか（§5.2）。
 7. Dreamとagent processの分離方法（§12）。

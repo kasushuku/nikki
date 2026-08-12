@@ -39,6 +39,8 @@ RUN opam update \
 # _build/default/web/assets からruntimeへ渡すこと。
 COPY --chown=opam:opam dune ./
 COPY --chown=opam:opam web ./web
+# vendor/ はopamで解決せず取り込んだ第三者ライブラリ（vendor/README.md）
+COPY --chown=opam:opam vendor ./vendor
 COPY --chown=opam:opam app ./app
 RUN opam exec -- dune build --profile release app/bin/main.exe
 
