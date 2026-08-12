@@ -1,0 +1,5 @@
+; vendorしたライブラリ。上流との差分は vendor/README.md を参照。
+; 上流の名前は search だが、それだと app/lib/search.ml のような
+; 自前の Search モジュールと衝突して外側が見えなくなるため改名している。
+(library
+ (name tfidf_search))
